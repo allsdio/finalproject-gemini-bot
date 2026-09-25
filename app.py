@@ -57,14 +57,8 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Membuat chat Gemini
-chat = client.chats.create(
-    model="gemini-2.0-flash",
-    config=types.GenerateContentConfig(
-        temperature=temperature,
-        system_instruction=system_instruction
-    )
-)
-    st.session_state.ch
+if "chat" not in st.session_state:
+    st.session_state.chat = client.chats.create(
         model="gemini-2.0-flash",
         config=types.GenerateContentConfig(
             temperature=temperature,
