@@ -74,8 +74,6 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🤖 EduData Bot")
-st.caption("Asisten AI Interaktif untuk Belajar Data Science & Analytics")
 
 # Sidebar Konfigurasi Parameter
 st.sidebar.header("⚙️ Konfigurasi Parameter")
