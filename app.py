@@ -60,8 +60,7 @@ if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science..."):
         with st.spinner("EduData Bot sedang berpikir..."):
             response = st.session_state.chat_session.send_message(prompt)
             st.markdown(response.text)
-import streamlit as st
-import google.generativeai as genai
+
 
 # Konfigurasi API Key Gemini
 api_key = st.secrets["GEMINI_API_KEY"]
