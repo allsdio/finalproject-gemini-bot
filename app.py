@@ -64,7 +64,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Konfigurasi API Key Gemini
-api_key = api_key = st.secrets["GEMINI_API_KEY"]
+api_key = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=api_key)
 
 # Setup Halaman Streamlit
