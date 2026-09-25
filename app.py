@@ -89,7 +89,7 @@ Jawablah dengan terstruktur, berikan contoh kode jika relevan, dan dukung penggu
 
 # Inisialisasi Model Gemini
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
+    model_name="gemini-2.0-flash",
     generation_config={"temperature": temperature},
     system_instruction=system_instruction
 )
