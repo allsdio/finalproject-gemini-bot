@@ -17,7 +17,11 @@ st.caption("Asisten AI Interaktif untuk Belajar Data Science & Analytics")
 
 # Sidebar Konfigurasi Parameter
 st.sidebar.header("⚙️ Konfigurasi Parameter")
-tone = st.sidebar.selectbox("Gaya Bahasa (Tone):", ["Santai & Ramah", "Formal & Profesional", "Ringkas & Direct"])
+tone = st.sidebar.selectbox(
+    "Gaya Bahasa (Tone):",
+    ["Santai & Ramah", "Formal & Profesional", "Ringkas & Direct"],
+    key="tone_select"
+)
 temperature = st.sidebar.slider("Kreativitas (Temperature):", 0.0, 1.0, 0.7, 0.1)
 
 # Prompt Instruksi Sistem
