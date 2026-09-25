@@ -105,7 +105,7 @@ for message in st.session_state.chat_session.history:
         st.markdown(message.parts[0].text)
 
 # Input Pesan Pengguna
-if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science..."):
+if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science...", key="chat_input"):
     # Tampilkan pesan user
     with st.chat_message("user"):
         st.markdown(prompt)
