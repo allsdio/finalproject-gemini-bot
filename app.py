@@ -3,7 +3,7 @@ from google import genai
 from google.genai import types
 
 st.set_page_config(
-    page_title="EduData Bot - Asisten AI Data Science",
+    page_title="EduData Bot",
     page_icon="🤖",
     layout="wide"
 )
@@ -31,47 +31,19 @@ temperature = st.sidebar.slider(
     0.1
 )
 
-# API Gemini
+# API Key
 api_key = st.secrets["GEMINI_API_KEY"]
-client = genai.Client(api_key=api_key)
 
-# Instruksi AI
-system_instruction = f"""
-Anda adalah EduData Bot, seorang pakar Data Science dan AI Mentor.
-
-Tugas Anda membantu pengguna memahami:
-- Data Science
-- Python
-- Machine Learning
-- SQL
-- Data Analytics
-
-Gaya bahasa respon: {tone}.
-
-Jawablah dengan terstruktur, mudah dipahami,
-dan berikan contoh kode jika relevan.
-"""
-
-# Menyimpan percakapan
+# Riwayat percakapan untuk tampilan
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Membuat chat Gemini
-if "chat" not in st.session_state:
-    st.session_state.chat = client.chats.create(
-        model="gemini-2.0-flash",
-        config=types.GenerateContentConfig(
-            temperature=temperature,
-            system_instruction=system_instruction
-        )
-    )
-
-# Menampilkan percakapan
+# Tampilkan riwayat
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Input
+# Input pengguna
 if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science..."):
 
     st.session_state.messages.append({
@@ -84,9 +56,29 @@ if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science..."):
 
     with st.chat_message("assistant"):
         with st.spinner("EduData Bot sedang berpikir..."):
+
             try:
-                response = st.session_state.chat.send_message(
-                    message=prompt
+                client = genai.Client(api_key=api_key)
+
+                system_instruction = f"""
+                Anda adalah EduData Bot, seorang pakar Data Science dan AI Mentor.
+
+                Bantu pengguna memahami Data Science, Python,
+                Machine Learning, SQL, dan Data Analytics.
+
+                Gaya bahasa: {tone}.
+
+                Jawablah dengan jelas, terstruktur,
+                dan mudah dipahami.
+                """
+
+                response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=temperature,
+                        system_instruction=system_instruction
+                    )
                 )
 
                 answer = response.text
@@ -97,6 +89,8 @@ if prompt := st.chat_input("Tanyakan sesuatu seputar Data Science..."):
                     "role": "assistant",
                     "content": answer
                 })
+
+                client.close()
 
             except Exception as e:
                 st.error(f"Terjadi error: {e}")
